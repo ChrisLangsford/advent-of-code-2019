@@ -13,10 +13,10 @@ function intCode(initialState, noun, verb) {
         let operation = programState[instructionPointer];
         switch (operation) {
             case 1:
-                programState[programState[instructionPointer + 3]] = add(findInProgramState(programState, programState[instructionPointer + 1]), findInProgramState(programState, programState[instructionPointer + 2]));
+                programState[programState[instructionPointer + 3]] = add(programState[programState[instructionPointer + 1]], programState[programState[instructionPointer + 2]]);
                 break;
             case 2:
-                programState[programState[instructionPointer + 3]] = multiply(findInProgramState(programState, programState[instructionPointer + 1]), findInProgramState(programState, programState[instructionPointer + 2]));
+                programState[programState[instructionPointer + 3]] = multiply(programState[programState[instructionPointer + 1]], programState[programState[instructionPointer + 2]]);
                 break;
             case 99:
                 return halt(programState);
@@ -51,8 +51,4 @@ function add(arg1, arg2) {
 
 function multiply(arg1, arg2) {
     return arg1 * arg2;
-}
-
-function findInProgramState(list, arg) {
-    return list[arg];
 }
