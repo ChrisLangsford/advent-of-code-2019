@@ -2,10 +2,9 @@
   "name": "2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "2/index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "day-2": "node 2/index.js"
   },
   "author": "",
   "license": "ISC"
