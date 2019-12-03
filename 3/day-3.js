@@ -9,21 +9,12 @@ console.log(`part 2: ${part2(input)}`);
 
 function part1(input) {
     if (input) {
-        let A = input.split("\n")[0];
-        let B = input.split("\n")[1];
-        let PA = getPoints(A);
-        let PB = getPoints(B);
-        let intersection = Object.keys(PA).filter(key => {
-            return PB[key] !== undefined;
-        });
-
+        let intersection = findIntersection(input);
         let distances = [];
-
-        intersection.forEach(point => {
-            let p = convertPointStringToValues(point);
+        Object.keys(intersection).forEach(point => {
+            let p = intersection[point];
             distances.push(parseInt(Math.abs(p.x) + Math.abs(p.y)));
         });
-
         return Math.min(...distances);
     }
 
@@ -32,25 +23,30 @@ function part1(input) {
 
 function part2(input) {
     if (input) {
-        let A = input.split("\n")[0];
-        let B = input.split("\n")[1];
-        let PA = getPoints(A);
-        let PB = getPoints(B);
-        let intersection = {};
-        Object.keys(PA).forEach(point => {
-            if (PB[point] !== undefined) {
-                intersection[point] = {x: point.split(',')[0], y: point.split(',')[1]};
-            }
-        });
+        let intersection = findIntersection(input);
         let distances = [];
 
         Object.keys(intersection).forEach(point => {
-            distances.push(PA[point].length + PB[point].length);
+            distances.push(intersection[point].length);
         });
 
         return Math.min(...distances);
     }
     return null;
+}
+
+function findIntersection(input) {
+    let A = input.split("\n")[0];
+    let B = input.split("\n")[1];
+    let PA = getPoints(A);
+    let PB = getPoints(B);
+    let intersection = {};
+    Object.keys(PA).forEach(point => {
+        if (PB[point] !== undefined) {
+            intersection[point] = {x: point.split(',')[0], y: point.split(',')[1], length: PA[point].length+PB[point].length};
+        }
+    });
+    return intersection;
 }
 
 function getPoints(wire) {
@@ -70,12 +66,6 @@ function getPoints(wire) {
         }
     });
     return points;
-}
-
-function convertPointStringToValues(point) {
-    let x = point.split(",")[0];
-    let y = point.split(",")[1];
-    return {x: parseInt(x), y: parseInt(y)};
 }
 
 module.exports = {part1: part1, part2: part2};
