@@ -13,7 +13,7 @@ function part1(input) {
         let B = input.split("\n")[1];
         let PA = getPoints(A);
         let PB = getPoints(B);
-        let intersection = Object.keys(PA).filter(key=> {
+        let intersection = Object.keys(PA).filter(key => {
             return PB[key] !== undefined;
         });
 
@@ -31,9 +31,25 @@ function part1(input) {
 }
 
 function part2(input) {
-    //TODO: part 2 requires we keep track of length of wire leading up to each point
-    // only track the shortest length of wire to reach a given point
-    // combine the lengths at each intersection and find the min
+    if (input) {
+        let A = input.split("\n")[0];
+        let B = input.split("\n")[1];
+        let PA = getPoints(A);
+        let PB = getPoints(B);
+        let intersection = {};
+        Object.keys(PA).forEach(point => {
+            if (PB[point] !== undefined) {
+                intersection[point] = {x: point.split(',')[0], y: point.split(',')[1]};
+            }
+        });
+        let distances = [];
+
+        Object.keys(intersection).forEach(point => {
+            distances.push(PA[point].length + PB[point].length);
+        });
+
+        return Math.min(...distances);
+    }
     return null;
 }
 
@@ -41,6 +57,7 @@ function getPoints(wire) {
     let x = 0;
     let y = 0;
     let points = {};
+    let length = 0;
     wire.split(',').forEach(cmd => {
         let direction = cmd.slice(0, 1);
         let range = cmd.slice(1, cmd.length);
@@ -48,7 +65,8 @@ function getPoints(wire) {
         for (let i = 0; i < range; i++) {
             x += DX[direction];
             y += DY[direction];
-            points[`${x},${y}`]  = {x:x, y: y}
+            length++;
+            points[`${x},${y}`] = {x: x, y: y, length: length}
         }
     });
     return points;
