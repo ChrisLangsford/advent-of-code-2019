@@ -45,6 +45,9 @@ function part2(input) {
             distances.push(p.length);
         });
 
+        //TODO: part 2 requires we keep track of length of wire leading up to each point
+        // only track the shortest length of wire to reach a given point
+        // combine the lengths at each intersection and find the min
         return Math.min(...distances);
     }
 
