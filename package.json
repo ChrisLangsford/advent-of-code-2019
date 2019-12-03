@@ -5,8 +5,12 @@
   "main": "2/day-2.js",
   "scripts": {
     "day-2": "node 2/day-2.js",
-    "day-3": "node 3/day-3.js"
+    "day-3": "node 3/day-3.js",
+    "day-3-test": "mocha 3/day-3-test.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^6.2.2"
+  }
 }
