@@ -6,7 +6,9 @@
   "scripts": {
     "day-2": "node 2/day-2.js",
     "day-3": "node 3/day-3.js",
-    "day-3-test": "mocha 3/day-3-test.js"
+    "day-3-test": "mocha 3/day-3-test.js",
+    "day-4": "node 4/day-4.js",
+    "day-4-test": "mocha 4/day-4-test.js"
   },
   "author": "",
   "license": "ISC",
