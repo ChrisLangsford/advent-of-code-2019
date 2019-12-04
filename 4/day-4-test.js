@@ -9,20 +9,38 @@ describe('Day 4 Part 1', () => {
     });
 });
 
-describe('IsValid tests', () => {
+describe('IsValid1 tests', () => {
     describe('test 1', () => {
         it('111111 should be valid', () => {
-            assert.equal(day4.isValid("111111"), true);
+            assert.equal(day4.isValid1("111111"), true);
         });
     });
     describe('test 2', () => {
         it('223450 should be invalid', () => {
-            assert.equal(day4.isValid("223450"), false);
+            assert.equal(day4.isValid1("223450"), false);
         });
     });
     describe('test 3', () => {
         it('123789 should be invalid', () => {
-            assert.equal(day4.isValid("123789"), false);
+            assert.equal(day4.isValid1("123789"), false);
+        });
+    });
+});
+
+describe('IsValid2 tests', () => {
+    describe('test 1', () => {
+        it('112233 should be valid', () => {
+            assert.equal(day4.isValid1("112233"), true);
+        });
+    });
+    describe('test 2', () => {
+        it('123444 should be invalid', () => {
+            assert.equal(day4.isValid1("123444"), false);
+        });
+    });
+    describe('test 3', () => {
+        it('111122 should be invalid', () => {
+            assert.equal(day4.isValid1("111122"), false);
         });
     });
 });
