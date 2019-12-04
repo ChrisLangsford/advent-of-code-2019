@@ -3,8 +3,8 @@ let day4 = require('./day-4.js');
 
 describe('Day 4 Part 1', () => {
     describe('test 1', () => {
-        it('111-125 should have 9 valid passwords', () => {
-            assert.equal(day4.part1("111-125"), 9);
+        it('111-120 should have 9 valid passwords', () => {
+            assert.equal(day4.part1("111-120"), 9);
         });
     });
 });

@@ -24,8 +24,7 @@ function isValid(s) {
 }
 
 function containsDouble(s) {
-    //TODO: why is this not working???
-    let match = s.match(new RegExp(/(.)\1{2,}/g));
+    let match = s.match(new RegExp(/(.)\1{1,}/g));
     return  match !== [] && match !== null;
 }
 
