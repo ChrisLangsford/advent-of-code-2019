@@ -32,7 +32,7 @@ function isValid1(s) {
 }
 
 function isValid2(s) {
-    return containsDouble(s) && charsInAscendingOrder(s) && doubleNotPartOfLargerGroup(s);
+    return containsDouble(s) && doubleNotPartOfLargerGroup(s) && charsInAscendingOrder(s);
 }
 
 function containsDouble(s) {
@@ -51,7 +51,9 @@ function charsInAscendingOrder(s) {
 }
 
 function doubleNotPartOfLargerGroup(s) {
-    return true;
+    let match = s.match(new RegExp(/(.)\1{1,}/g));
+    match = match.filter(e => e.length <= 2);
+    return match !== [] && match !== null && match.length > 0;
 }
 
 

@@ -30,17 +30,17 @@ describe('IsValid1 tests', () => {
 describe('IsValid2 tests', () => {
     describe('test 1', () => {
         it('112233 should be valid', () => {
-            assert.equal(day4.isValid1("112233"), true);
+            assert.equal(day4.isValid2("112233"), true);
         });
     });
     describe('test 2', () => {
         it('123444 should be invalid', () => {
-            assert.equal(day4.isValid1("123444"), false);
+            assert.equal(day4.isValid2("123444"), false);
         });
     });
     describe('test 3', () => {
         it('111122 should be invalid', () => {
-            assert.equal(day4.isValid1("111122"), false);
+            assert.equal(day4.isValid2("111122"), true);
         });
     });
 });
