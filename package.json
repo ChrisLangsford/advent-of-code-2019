@@ -10,7 +10,9 @@
     "day-4": "node 4/day-4.js",
     "day-4-test": "mocha 4/day-4-test.js",
     "day-5": "node 5/day-5.js",
-    "day-5-test": "mocha 5/day-5-test.js"
+    "day-5-test": "mocha 5/day-5-test.js",
+    "day-6": "node 6/day-6.js",
+    "day-6-test": "mocha 6/day-6-test.js"
   },
   "author": "",
   "license": "ISC",
