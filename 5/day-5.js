@@ -1,7 +1,7 @@
 const input = require("./input-5");
 
 console.log(`Part 1: ${part1(input.string, 1)}`);
-console.log(`Part 2: ${part2(input.string, 5)} do not trust me, The program runs for one cycle after the print instruction making the final print out incorrect`);
+console.log(`Part 2: ${part2(input.string, 5)}`);
 
 function part1(input, startCode) {
     return intCode(input, startCode);
@@ -32,10 +32,9 @@ function getArgs(P, ip, n, digits) {
 function intCode(initialState, startCode) {
     let P = [...parseInput(initialState)];
     let ip = 0;
+    let last;
 
-    let loop = true;
-
-    while (loop) {
+    while (true) {
         let digits = P[ip].toString().split("").map(x => parseInt(x));
 
         let opCode = (digits.length === 1 ? 0 : digits[digits.length - 2]) * 10 + digits[digits.length - 1];
@@ -70,6 +69,7 @@ function intCode(initialState, startCode) {
             case 4:
                 i1 = P[ip + 1];
                 console.log(P[i1]);
+                last = P[i1];
                 ip += 2;
                 break;
             case 5:
@@ -105,8 +105,7 @@ function intCode(initialState, startCode) {
                 ip += 4;
                 break;
             case 99:
-                p = getArgs(P, ip, 1, digits);
-                return p.p1;
+                return last;
         }
 
     }
