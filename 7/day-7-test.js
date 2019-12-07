@@ -2,9 +2,51 @@ let assert = require('assert');
 let day7 = require('./day-7.js');
 
 describe('Day 7 Part 1', () => {
-    describe('test 1', () => {
-        it('should', () => {
-            assert.equal(day7.part1(), null);
+    let input1 = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0";
+    let input2 = "3,23,3,24,1002,24,10,24,1002,23,-1,23,101,5,23,23,1,24,23,23,4,23,99,0,0";
+    let input3 = "3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0";
+    describe('run code pass test', () => {
+        it('should get the correct results for the given permutation 1', () => {
+            assert.equal(day7.run(input1, "43210"), 43210);
+        });
+        it('should get the correct results for the given permutation 2', () => {
+            assert.equal(day7.run(input2, "01234"), 54321);
+        });
+        it('should get the correct results for the given permutation 3', () => {
+            assert.equal(day7.run(input3, "10432"), 65210);
+        });
+    });
+    describe('run code fail test', () => {
+        it('should not get the correct result for an incorrect permutation 1', () => {
+            assert.notEqual(day7.run(input1, "34210"), 43210);
+        });
+        it('should not get the correct result for an incorrect permutation 2', () => {
+            assert.notEqual(day7.run(input2, "12304"), 54321);
+        });
+        it('should not get the correct result for an incorrect permutation 3', () => {
+            assert.notEqual(day7.run(input3, "14032"), 65210);
+        });
+    });
+    describe('permutations test', () => {
+        it('should get 1 permutation of 1', () => {
+            assert.equal(day7.permute("1").length, 1);
+        });
+        it('should get 2 permutations of 12', () => {
+            assert.equal(day7.permute("12").length, 2);
+        });
+        it('should get 120 permutations of 01234', () => {
+            assert.equal(day7.permute("01234").length, 120);
+        });
+    });
+    describe('full test', () => {
+        it('should work for case 1', () => {
+            assert.equal(day7.part1(input1), `Maximum thrust signal: 43210, phase permutation: 43210`);
+        });
+        it('should work for case 2', () => {
+            assert.equal(day7.part1(input2), `Maximum thrust signal: 54321, phase permutation: 01234`);
+        });
+        it('should work for case 3', () => {
+            assert.equal(day7.part1(input3), `Maximum thrust signal: 65210, phase permutation: 10432`);
         });
     });
 });

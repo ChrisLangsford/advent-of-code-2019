@@ -4,19 +4,58 @@ console.log(`Part 1: ${part1(input.string)}`);
 console.log(`Part 2: ${part2(input.string)}`);
 
 function part1(input) {
+    let permutations = permute("01234");
+    let ans = 0;
+    let winner = "";
+
+    permutations.forEach(p => {
+        let out = run(input, p);
+        if (out > ans) {
+            ans = out;
+            winner = p;
+        }
+    });
+    return `Maximum thrust signal: ${ans}, phase permutation: ${winner}`;
 }
 
 
 function part2(input) {
 }
 
-function intCode(initialState, startCode) {
-    let P = [...initialState];
+function run(input, perm) {
+    let ans = 0;
+    let amplifiers = perm.split("").map(x => Number(x));
+    for (let i = 0; i < amplifiers.length; i++) {
+        ans = intCode(input, [amplifiers[i], ans]);
+    }
+    console.log(`${ans}`);
+    return ans;
+}
+
+function permute(s) {
+    if (s.length < 2) return s;
+    let perms = [];
+    for (let i = 0; i < s.length; i++) {
+        let char = s[i];
+        if (s.indexOf(char) !== i) {
+            continue;
+        }
+        let remString = s.slice(0, i) + s.slice(i + 1, s.length);
+
+        for (let sub of permute(remString)) {
+            perms.push(char + sub);
+        }
+    }
+    return perms;
+}
+
+function intCode(initialState, inputs) {
+    let nextInput = 0;
+    let P = [...parseInput(initialState)];
     let ip = 0;
+    let last;
 
-    let loop = true;
-
-    while (loop) {
+    while (true) {
         let digits = P[ip].toString().split("").map(x => parseInt(x));
 
         let opCode = (digits.length === 1 ? 0 : digits[digits.length - 2]) * 10 + digits[digits.length - 1];
@@ -45,12 +84,14 @@ function intCode(initialState, startCode) {
                 break;
             case 3:
                 i1 = P[ip + 1];
-                P[i1] = startCode;
+                P[i1] = inputs[nextInput];
+                nextInput++;
                 ip += 2;
                 break;
             case 4:
                 i1 = P[ip + 1];
                 console.log(P[i1]);
+                last = P[i1];
                 ip += 2;
                 break;
             case 5:
@@ -86,15 +127,34 @@ function intCode(initialState, startCode) {
                 ip += 4;
                 break;
             case 99:
-                p = getArgs(P, ip, 1, digits);
-                return p.p1;
+                return last;
         }
 
     }
 
 }
 
+function parseInput(input) {
+    return input.split(',').map(x => parseInt(x));
+}
+
+function getArgs(P, ip, n, digits) {
+    while (digits.length < n) {
+        digits = [0, ...digits];
+    }
+    let i1 = P[ip + 1];
+    let i2 = P[ip + 2];
+
+    let p1 = digits[n - 1] === 1 ? i1 : P[i1];
+    let p2 = digits[n - 2] === 1 ? i2 : P[i2];
+
+    return {p1: p1, p2: p2}
+
+}
+
 module.exports = {
     part1: part1,
-    part2: part2
+    part2: part2,
+    run: run,
+    permute: permute
 };
