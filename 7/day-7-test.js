@@ -37,6 +37,9 @@ describe('Day 7 Part 1', () => {
         it('should get 120 permutations of 01234', () => {
             assert.equal(day7.permute("01234").length, 120);
         });
+        it('should get 120 permutations of 56789', () => {
+            assert.equal(day7.permute("56789").length, 120);
+        });
     });
     describe('full test', () => {
         it('should work for case 1', () => {
@@ -51,10 +54,16 @@ describe('Day 7 Part 1', () => {
     });
 });
 
-describe('Day 6 Part 2', () => {
-    describe('test 1', () => {
-        it('should', () => {
-            assert.equal(day7.part2(""), null);
+describe('Day 7 Part 2', () => {
+    describe('full test', () => {
+
+        let input1 = "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5";
+        let input2 = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10";
+        it('should work for case 1', () => {
+            assert.equal(day7.part2(input1), `Maximum thrust signal: 139629729, phase permutation: 98765`);
         });
+        // it('should work for case 2', () => {
+        //     assert.equal(day7.part2(input2), `Maximum thrust signal: 18216, phase permutation: 97856`);
+        // });
     });
 });

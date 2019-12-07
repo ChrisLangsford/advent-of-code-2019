@@ -20,6 +20,18 @@ function part1(input) {
 
 
 function part2(input) {
+    let permutations = permute("56789");
+    let ans = 0;
+    let winner = "";
+
+    permutations.forEach(p => {
+        let out = run(input, p);
+        if (out > ans) {
+            ans = out;
+            winner = p;
+        }
+    });
+    return `Maximum thrust signal: ${ans}, phase permutation: ${winner}`;
 }
 
 function run(input, perm) {
@@ -50,7 +62,6 @@ function permute(s) {
 }
 
 function intCode(initialState, inputs) {
-    let nextInput = 0;
     let P = [...parseInput(initialState)];
     let ip = 0;
     let last;
@@ -84,8 +95,8 @@ function intCode(initialState, inputs) {
                 break;
             case 3:
                 i1 = P[ip + 1];
-                P[i1] = inputs[nextInput];
-                nextInput++;
+                P[i1] = inputs[0];
+                inputs[0] = inputs.pop();
                 ip += 2;
                 break;
             case 4:
