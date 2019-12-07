@@ -4,11 +4,15 @@ console.log(`Part 1: ${part1(input.string, 1)}`);
 console.log(`Part 2: ${part2(input.string, 5)} do not trust me, The program runs for one cycle after the print instruction making the final print out incorrect`);
 
 function part1(input, startCode) {
-    return intCode(input.split(',').map(x => parseInt(x)), startCode);
+    return intCode(input, startCode);
 }
 
 function part2(input, startCode) {
-    return intCode(input.split(',').map(x => parseInt(x)), startCode);
+    return intCode(input, startCode);
+}
+
+function parseInput(input) {
+    return input.split(',').map(x => parseInt(x));
 }
 
 function getArgs(P, ip, n, digits) {
@@ -26,7 +30,7 @@ function getArgs(P, ip, n, digits) {
 }
 
 function intCode(initialState, startCode) {
-    let P = [...initialState];
+    let P = [...parseInput(initialState)];
     let ip = 0;
 
     let loop = true;
