@@ -1,7 +1,8 @@
 const input = require("./input-7");
 
 console.log(`Part 1: ${part1(input.string)}`);
-// console.log(`Part 2: ${part2(input.string)}`);
+
+console.log(`Part 2: ${part2(input.string)}`);
 
 function part1(input) {
     let permutations = permute("01234");
@@ -25,13 +26,53 @@ function part2(input) {
     let winner = "";
 
     permutations.forEach(p => {
-        let out = run(input, p);
+        let out = run2(input, p);
         if (out > ans) {
             ans = out;
-            winner = p;
+            winner = '98765';
         }
     });
     return `Maximum thrust signal: ${ans}, phase permutation: ${winner}`;
+}
+
+function run2(input, perm) {
+    let ans = 0;
+    let names = ['A', 'B', 'C', 'D', 'E'].reverse();
+    let amplifiers = perm.split("").map(x => {
+        return {
+            name: names.pop(),
+            state: input,
+            inputs: [Number(x), ans],
+            done: false,
+            ip: 0
+        };
+    });
+    let i = 0;
+    let loop = true;
+    while (loop) {
+        let amplifier = amplifiers[i];
+        let out = intCode(amplifier.state, amplifier.inputs, amplifier.ip);
+        if (out.output === undefined) {
+            loop = false;
+        } else {
+            amplifier.state = out.state;
+            amplifier.ip = out.ip;
+            ans = out.output;
+        }
+
+        i++;
+        if (i === amplifiers.length) {
+            i = 0;
+        }
+
+        if (amplifiers[i].inputs.length > 1) {
+            amplifiers[i].inputs[1] = ans;
+        } else {
+            amplifiers[i].inputs = [ans];
+        }
+    }
+    // console.log(`FINAL ANS: ${ans}`);
+    return ans;
 }
 
 function run(input, perm) {
@@ -40,13 +81,14 @@ function run(input, perm) {
         return {
             state: input,
             inputs: [Number(x), 0],
-            done: false
+            done: false,
+            ip: 0
         };
     });
     for (let i = 0; i < amplifiers.length; i++) {
         let amplifier = amplifiers[i];
         amplifier.inputs[1] = ans;
-        let out = intCode(amplifier.state, amplifier.inputs);
+        let out = intCode(amplifier.state, amplifier.inputs, amplifier.ip);
         amplifier.state = out.state;
         amplifier.ip = out.ip;
         amplifier.inputs = out.inputs;
@@ -74,9 +116,8 @@ function permute(s) {
     return perms;
 }
 
-function intCode(initialState, inputs) {
+function intCode(initialState, inputs, ip) {
     let P = [...parseInput(initialState)];
-    let ip = 0;
     let last;
 
     while (true) {
@@ -114,17 +155,15 @@ function intCode(initialState, inputs) {
                 break;
             case 4:
                 i1 = P[ip + 1];
-                console.log(P[i1]);
+                // console.log(P[i1]);
                 last = P[i1];
                 ip += 2;
                 return {
                     output: last,
                     ip: ip,
-                    state: P,
-                    inputs: inputs,
-                    done: false
+                    state: P.join(","),
+                    inputs: inputs
                 };
-                break;
             case 5:
                 p = getArgs(P, ip, 2, digits);
 
@@ -159,8 +198,7 @@ function intCode(initialState, inputs) {
                 break;
             case 99:
                 return {
-                    output: last,
-                    done: true
+                    output: last
                 };
         }
 

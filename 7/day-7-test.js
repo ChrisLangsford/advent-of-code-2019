@@ -62,8 +62,8 @@ describe('Day 7 Part 2', () => {
         it('should work for case 1', () => {
             assert.equal(day7.part2(input1), `Maximum thrust signal: 139629729, phase permutation: 98765`);
         });
-        // it('should work for case 2', () => {
-        //     assert.equal(day7.part2(input2), `Maximum thrust signal: 18216, phase permutation: 97856`);
-        // });
+        it('should work for case 2', () => {
+            assert.equal(day7.part2(input2), `Maximum thrust signal: 18216, phase permutation: 97856`);
+        });
     });
 });
