@@ -1,7 +1,7 @@
 const input = require("./input-7");
 
 console.log(`Part 1: ${part1(input.string)}`);
-console.log(`Part 2: ${part2(input.string)}`);
+// console.log(`Part 2: ${part2(input.string)}`);
 
 function part1(input) {
     let permutations = permute("01234");
@@ -36,9 +36,22 @@ function part2(input) {
 
 function run(input, perm) {
     let ans = 0;
-    let amplifiers = perm.split("").map(x => Number(x));
+    let amplifiers = perm.split("").map(x => {
+        return {
+            state: input,
+            inputs: [Number(x), 0],
+            done: false
+        };
+    });
     for (let i = 0; i < amplifiers.length; i++) {
-        ans = intCode(input, [amplifiers[i], ans]);
+        let amplifier = amplifiers[i];
+        amplifier.inputs[1] = ans;
+        let out = intCode(amplifier.state, amplifier.inputs);
+        amplifier.state = out.state;
+        amplifier.ip = out.ip;
+        amplifier.inputs = out.inputs;
+        amplifier.done = out.done;
+        ans = out.output;
     }
     console.log(`${ans}`);
     return ans;
@@ -104,6 +117,13 @@ function intCode(initialState, inputs) {
                 console.log(P[i1]);
                 last = P[i1];
                 ip += 2;
+                return {
+                    output: last,
+                    ip: ip,
+                    state: P,
+                    inputs: inputs,
+                    done: false
+                };
                 break;
             case 5:
                 p = getArgs(P, ip, 2, digits);
@@ -138,7 +158,10 @@ function intCode(initialState, inputs) {
                 ip += 4;
                 break;
             case 99:
-                return last;
+                return {
+                    output: last,
+                    done: true
+                };
         }
 
     }
