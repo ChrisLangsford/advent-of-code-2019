@@ -2,17 +2,21 @@ let assert = require('assert');
 let day7 = require('./day-8.js');
 
 describe('Day 8 Part 1', () => {
-    let input1 = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0";
-    describe('run code pass test', () => {
-        it('should get the correct results for the given permutation 1', () => {
-            assert.equal(day7.run(input1, "43210"), 43210);
+    let input1 = "123456789012";
+    describe('parse input test', () => {
+        it('should split the input into 2 equal layers of ', () => {
+            assert.deepEqual(day7.parseInputIntoLayers(input1, 3, 2), [
+                {id: 0, digits: [1, 2, 3, 4, 5, 6], zeroCount: 0},
+                {id: 1, digits: [7, 8, 9, 0, 1, 2], zeroCount: 1},
+            ]);
         });
-        it('should get the correct results for the given permutation 2', () => {
-            assert.equal(day7.run(input2, "01234"), 54321);
-        });
-        it('should get the correct results for the given permutation 3', () => {
-            assert.equal(day7.run(input3, "10432"), 65210);
-        });
+    });
+    describe('part 1 tests', () => {
+        // it('should', () => {
+        //     assert.equal(day7.part1(input1, 3, 2),
+        //         {"id": 1, "digits": [7, 8, 9, 0, 1, 2], "zeroCount": 1}
+        //     );
+        // });
     });
 
 });
