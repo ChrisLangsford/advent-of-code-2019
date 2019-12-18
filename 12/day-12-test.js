@@ -11,7 +11,7 @@ const input = {
 describe('Day 12 Part 1', () => {
     describe('run tests', () => {
         it('should ', () => {
-            assert.equal(true, true);
+            assert.deepEqual(day12.tick(input), {"i":{"pos":[2,-1,1],"vel":[3,-1,-1]},"e":{"pos":[3,-7,-4],"vel":[1,3,3]},"g":{"pos":[1,-7,5],"vel":[-3,1,-3]},"c":{"pos":[2,2,0],"vel":[-1,-3,1]}});
         });
     });
 
