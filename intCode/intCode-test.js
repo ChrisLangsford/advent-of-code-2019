@@ -10,31 +10,31 @@ const day7Input = "3,8,1001,8,10,8,105,1,0,0,21,38,63,76,93,118,199,280,361,442,
 describe('IntCode Tests', () => {
     describe('Day 2 part 1', () => {
         it('should calculate 3716250 at position 0 upon completion', () => {
-            assert.equal(intCode(day2Input1).memory[0], 3716250);
+            assert.equal(intCode(day2Input1, 0, 0).memory[0], 3716250);
         });
     });
     describe('Day 2 part 2', () => {
         it('should get an output of 19690720 from input 2', () => {
-            assert.equal(intCode(day2Input2).memory[0], 19690720);
+            assert.equal(intCode(day2Input2, 0, 0).memory[0], 19690720);
         });
     });
     describe('Day 5 part 1', () => {
         it('should get an output of 9219874 provided input 1', () => {
-            assert.equal(intCode(day5Input, [1]).output, 9219874);
+            assert.equal(intCode(day5Input, 0, [1], 0).output, 9219874);
         });
     });
     describe('Day 5 part 2', () => {
         it('should get an output of 19690720 from input 2', () => {
-            assert.equal(intCode(day5Input, [5]).output, 5893654);
+            assert.equal(intCode(day5Input, 0, [5], 0).output, 5893654);
         });
     });
     describe('Day 7 part 1', () => {
         it('should get an output of 9219874 provided inputs 03124 for 5 chained operations of intCode', () => {
-            let a = intCode(day7Input, [0, 0]);
-            let b = intCode(day7Input, [3, a.output]);
-            let c = intCode(day7Input, [1, b.output]);
-            let d = intCode(day7Input, [2, c.output]);
-            let e = intCode(day7Input, [4, d.output]);
+            let a = intCode(day7Input, 0, [0, 0], 0);
+            let b = intCode(day7Input, 0, [3, a.output], 0);
+            let c = intCode(day7Input, 0, [1, b.output], 0);
+            let d = intCode(day7Input, 0, [2, c.output], 0);
+            let e = intCode(day7Input, 0, [4, d.output], 0);
             assert.equal(e.output, 398674);
         });
     });

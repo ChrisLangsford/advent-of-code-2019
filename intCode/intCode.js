@@ -1,6 +1,5 @@
-module.exports = intcode = function intCode(initialState, input) {
+module.exports = intcode = function intCode(initialState, ip, input, relativeBase) {
     let memory = initialState.split(',').map(x => parseInt(x));
-    let ip = 0;
     let run = true;
     let output = null;
 
@@ -13,6 +12,7 @@ module.exports = intcode = function intCode(initialState, input) {
             parseInt(instruction.pop() || 0)
         ];
 
+        //todo: Make sense of relative mode here
         let p1 = modes[0] === 1 ? ip + 1 : memory[ip + 1];
         let p2 = modes[1] === 1 ? ip + 2 : memory[ip + 2];
         let p3 = memory[ip + 3];
@@ -40,7 +40,6 @@ module.exports = intcode = function intCode(initialState, input) {
                 break;
             }
             case 5 : {
-                //first time reaching this opcode is setting the ip to an invalid register
                 if (memory[p1] !== 0) {
                     ip = memory[p2];
                 } else {
@@ -72,6 +71,11 @@ module.exports = intcode = function intCode(initialState, input) {
                     memory[p3] = 0;
                 }
                 ip += 4;
+                break;
+            }
+            case 9: {
+                relativeBase += memory[p1];
+                ip += 2;
                 break;
             }
             case 99: {
