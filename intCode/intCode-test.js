@@ -20,12 +20,12 @@ describe('IntCode Tests', () => {
     });
     describe('Day 5 part 1', () => {
         it('should get an output of 9219874 provided input 1', () => {
-            assert.equal(intCode(day5Input, 1).output, 9219874);
+            assert.equal(intCode(day5Input, [1]).output, 9219874);
         });
     });
     describe('Day 5 part 2', () => {
         it('should get an output of 19690720 from input 2', () => {
-            assert.equal(intCode(day5Input, 5).output, 5893654);
+            assert.equal(intCode(day5Input, [5]).output, 5893654);
         });
     });
     describe('Day 7 part 1', () => {
@@ -35,12 +35,7 @@ describe('IntCode Tests', () => {
             let c = intCode(day7Input, [1, b.output]);
             let d = intCode(day7Input, [2, c.output]);
             let e = intCode(day7Input, [4, d.output]);
-            assert.equal(e.output, 9219874);
-        });
-    });
-    describe('Day 7 part 2', () => {
-        it('should get an output of 39431233, provided inputs 98765 --rather use day 7 tests using the new intCode code', () => {
-            // assert.equal(intCode(day5Input, 1).output, 9219874);
+            assert.equal(e.output, 398674);
         });
     });
 });

@@ -29,7 +29,8 @@ module.exports = intcode = function intCode(initialState, input) {
                 break;
             }
             case 3: {
-                memory[p1] = input;
+                memory[p1] = input[0];
+                input[0] = input.pop();
                 ip += 2;
                 break;
             }
