@@ -15,7 +15,7 @@ module.exports = intcode = function intCode(initialState, input) {
 
         let p1 = modes[0] === 1 ? ip + 1 : memory[ip + 1];
         let p2 = modes[1] === 1 ? ip + 2 : memory[ip + 2];
-        let p3 = modes[2] === 1 ? ip + 3 : memory[ip + 3];
+        let p3 = memory[ip + 3];
 
         switch (opCode) {
             case 1: {
@@ -40,23 +40,23 @@ module.exports = intcode = function intCode(initialState, input) {
             }
             case 5 : {
                 //first time reaching this opcode is setting the ip to an invalid register
-                if (p1 !== 0) {
-                    ip = p2;
+                if (memory[p1] !== 0) {
+                    ip = memory[p2];
                 } else {
                     ip += 3;
                 }
                 break;
             }
             case 6 : {
-                if (p1 === 0) {
-                    ip = p2;
+                if (memory[p1] === 0) {
+                    ip = memory[p2];
                 } else {
                     ip += 3;
                 }
                 break;
             }
             case 7 : {
-                if (p1 < p2) {
+                if (memory[p1] < memory[p2]) {
                     memory[p3] = 1;
                 } else {
                     memory[p3] = 0;
@@ -65,7 +65,7 @@ module.exports = intcode = function intCode(initialState, input) {
                 break;
             }
             case 8 : {
-                if (p1 === p2) {
+                if (memory[p1] === memory[p2]) {
                     memory[p3] = 1;
                 } else {
                     memory[p3] = 0;
