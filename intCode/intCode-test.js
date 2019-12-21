@@ -20,7 +20,8 @@ describe('IntCode Tests', () => {
     });
     describe('Day 5 part 1', () => {
         it('should get an output of 9219874 provided input 1', () => {
-            assert.equal(intCode(day5Input, 0, [1], 0).output, 9219874);
+            let output = intCode(day5Input, 0, [1], 0).output.split(',');
+            assert.equal(output[output.length-1], 9219874);
         });
     });
     describe('Day 5 part 2', () => {
@@ -29,6 +30,15 @@ describe('IntCode Tests', () => {
         });
     });
     describe('Day 7 part 1', () => {
+        it('should get an output of 43210 provided inputs 43210 for 5 chained operations of intCode', () => {
+            let day7Input2 = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0";
+            let a = intCode(day7Input2, 0, [4, 0], 0);
+            let b = intCode(day7Input2, 0, [3, a.output], 0);
+            let c = intCode(day7Input2, 0, [2, b.output], 0);
+            let d = intCode(day7Input2, 0, [1, c.output], 0);
+            let e = intCode(day7Input2, 0, [0, d.output], 0);
+            assert.equal(e.output, 43210);
+        });
         it('should get an output of 9219874 provided inputs 03124 for 5 chained operations of intCode', () => {
             let a = intCode(day7Input, 0, [0, 0], 0);
             let b = intCode(day7Input, 0, [3, a.output], 0);
