@@ -20,6 +20,8 @@
     "day-8-test": "mocha 8/day-8-test.js",
     "day-9": "node 9/day-9.js",
     "day-9-test": "mocha 9/day-9-test.js",
+    "day-10": "node 10/day-10.js",
+    "day-10-test": "mocha 10/day-10-test.js",
     "day-12": "node 12/day-12.js",
     "day-12-test": "mocha 12/day-12-test.js"
   },
