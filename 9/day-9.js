@@ -10,6 +10,7 @@ function part1(input) {
 
 
 function part2(input) {
+    return intCode(input, 0, [2], 0).output;
 }
 
 module.exports = {
