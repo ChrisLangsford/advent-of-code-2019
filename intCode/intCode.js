@@ -53,7 +53,7 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
                 break;
             }
             case 3: {
-                memory[p1] = input[0];
+                memory[getAtIndex(memory, p1)] = input[0];
                 input[0] = input.pop();
                 ip += 2;
                 break;
