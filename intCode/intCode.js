@@ -22,21 +22,21 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
         if (modes[0] === 1) {
             p1 = ip + 1;
         } else if (modes[0] === 2) {
-            p1 = memory[relativeBase + ip + 1];
+            p1 = memory[ip + 1] + relativeBase;
         } else {
             p1 = memory[ip + 1];
         }
         if (modes[1] === 1) {
             p2 = ip + 2;
         } else if (modes[1] === 2) {
-            p2 = memory[relativeBase + ip + 2];
+            p2 = memory[ip + 2] + relativeBase;
         } else {
             p2 = memory[ip + 2];
         }
         if (modes[2] === 1) {
             p3 = ip + 3;
         } else if (modes[2] === 2) {
-            p3 = memory[relativeBase + ip + 3];
+            p3 = memory[ip + 3] + relativeBase;
         } else {
             p3 = memory[ip + 3];
         }
