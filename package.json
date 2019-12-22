@@ -22,6 +22,8 @@
     "day-9-test": "mocha 9/day-9-test.js",
     "day-10": "node 10/day-10.js",
     "day-10-test": "mocha 10/day-10-test.js",
+    "day-11": "node 11/day-11.js",
+    "day-11-test": "mocha 11/day-11-test.js",
     "day-12": "node 12/day-12.js",
     "day-12-test": "mocha 12/day-12-test.js"
   },

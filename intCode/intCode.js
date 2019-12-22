@@ -14,7 +14,6 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
             parseInt(instruction.pop() || 0)
         ];
 
-        //TODO: run through example 1 (quine) and figure out whats really going on with relative position mode
         let p1;
         let p2;
         let p3;
@@ -115,7 +114,7 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
         }
     }
 
-    return {output: output.join(','), memory: memory};
+    return {output: output.join(','), memory: memory, instructionPointer: ip, relativeBase: relativeBase};
 };
 
 function getAtIndex(memory, index) {
