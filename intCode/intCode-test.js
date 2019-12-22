@@ -11,12 +11,12 @@ const day9Input = "1102,34463338,34463338,63,1007,63,34463338,63,1005,63,53,1102
 describe('IntCode Tests', () => {
     describe('Day 2 part 1', () => {
         it('should calculate 3716250 at position 0 upon completion', () => {
-            assert.equal(intCode(day2Input1, 0, 0).memory[0], 3716250);
+            assert.equal(intCode(day2Input1, 0, 0).memory.split(",")[0], 3716250);
         });
     });
     describe('Day 2 part 2', () => {
         it('should get an output of 19690720 from input 2', () => {
-            assert.equal(intCode(day2Input2, 0, 0).memory[0], 19690720);
+            assert.equal(intCode(day2Input2, 0, 0).memory.split(",")[0], 19690720);
         });
     });
     describe('Day 5 part 1', () => {
@@ -78,7 +78,6 @@ describe('IntCode Tests', () => {
         //     let c = intCode(day7Input4, 0, [7, Number(b.output)], 0);
         //     let d = intCode(day7Input4, 0, [6, Number(c.output)], 0);
         //     let e = intCode(day7Input4, 0, [5, Number(d.output)], 0);
-        //     // TODO: this test will need some enhancing to get the feedback loop working correctly
         //     assert.equal(e.output, 39431233);
         // });
     });

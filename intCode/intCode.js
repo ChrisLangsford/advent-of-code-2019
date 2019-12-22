@@ -1,4 +1,4 @@
-module.exports = intcode = function intCode(initialState, ip, input, relativeBase) {
+module.exports = intcode = function intCode(initialState, ip, input, relativeBase, canHalt) {
     let memory = initialState.split(',').map(x => parseInt(x));
     let run = true;
     let output = [];
@@ -60,10 +60,17 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
             case 4: {
                 output.push(memory[getAtIndex(memory, p1)]);
                 ip += 2;
-                //TODO: enhancement here. End the loop here and pass out the outputs as done for opCode 99 below.
-                // Come up with a clever way of returning the list of outputs to maintain the tests
-                // use Day 7 Part 2 as a test to make sure this feature works correctly.
-                break;
+                if (canHalt) {
+                    return {
+                        output: output.join(','),
+                        memory: memory.map(x => x.toString()).join(','),
+                        instructionPointer: ip,
+                        relativeBase: relativeBase,
+                        complete: false
+                    };
+                } else {
+                    break;
+                }
             }
             case 5 : {
                 if (memory[getAtIndex(memory, p1)] !== 0) {
@@ -117,7 +124,7 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
         }
     }
 
-    return {output: output.join(','), memory: memory, instructionPointer: ip, relativeBase: relativeBase};
+    return {output: output.join(','), memory: memory.map(x => x.toString()).join(','), instructionPointer: ip, relativeBase: relativeBase, complete: true};
 };
 
 function getAtIndex(memory, index) {

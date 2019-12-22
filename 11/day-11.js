@@ -9,8 +9,6 @@ const DXDY = {
 const DX = {"RIGHT": 1, "LEFT": -1, "UP": 0, "DOWN": 0};
 const DY = {"RIGHT": 0, "LEFT": 0, "UP": 1, "DOWN": -1};
 
-const COLOURS = {BLACK: 0, WHITE: 1};
-
 console.log(`Part 1: ${part1(input.string)}`);
 console.log(`Part 2: ${part2(input.string)}`);
 
@@ -26,24 +24,25 @@ function part1(input) {
 
     const robot = {
         done: false,
-        memory: input,
+        memoryString: input,
         ip: 0,
         relativeBase: 0,
         positionString: "0,0",
         facing: DIRECTIONS.UP,
         panelsPainted: new Set(),
         process: function () {
-            let out = intCode(this.memory, this.ip, [hull.getLocationColour(this.positionString)], this.relativeBase);
-            //TODO: intcode needs some work here. it runs until it reaches the 99 and does not halt and wait for the next input
-            this.memory = out.memory;
-            this.ip = out.instructionPointer;
-            this.relativeBase = out.relativeBase;
-            this.paint(out.output.split(',')[0]);
-            this.turn(out.output.split(',')[1]);
+            let colourOutput = intCode(this.memoryString, this.ip, [hull.getLocationColour(this.positionString)], this.relativeBase, true);
+            let turnOutput = intCode(colourOutput.memory, colourOutput.instructionPointer, [hull.getLocationColour(this.positionString)], colourOutput.relativeBase, true);
+            this.done = turnOutput.complete;
+            this.memoryString = turnOutput.memory;
+            this.ip = turnOutput.instructionPointer;
+            this.relativeBase = turnOutput.relativeBase;
+            this.paint(colourOutput.output);
+            this.turn(turnOutput.output);
             this.move();
         },
         paint: function (colour) {
-            hull.panels[this.positionString] = colour;
+            hull.panels[this.positionString] = parseInt(colour);
         },
         turn: function (turnInstruction) {
             this.facing = DXDY[`${this.facing}${turnInstruction}`];
@@ -57,10 +56,10 @@ function part1(input) {
             this.positionString = `${x},${y}`;
         }
     };
-
     while (!robot.done) {
         robot.process();
-        robot.done = true;
+        //TODO: heap running out of memory during second program run (second colour run)
+        // - good place to start is looking at the inputs provided for the second colour run
     }
 
     return Object.keys(hull.panels).length;

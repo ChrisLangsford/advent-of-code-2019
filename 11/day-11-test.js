@@ -9,7 +9,7 @@ describe('Day 11 Part 1', () => {
 
 });
 
-describe('Day 10 Part 2', () => {
+describe('Day 11 Part 2', () => {
     describe('run tests', () => {
         it('should ', () => {
         });

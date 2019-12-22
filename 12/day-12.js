@@ -25,8 +25,6 @@ function runForNumberOfTicks(input, numberOfTicks) {
 }
 
 function runUntilRepeatFound(input) {
-    //TODO: Non-brute force: find how long it takes for each dimension to repeat and take the LCM of those values
-
     // let loop = true;
     // let inputs = [];
     // let count = 0;
