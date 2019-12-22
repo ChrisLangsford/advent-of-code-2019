@@ -60,6 +60,9 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
             case 4: {
                 output.push(memory[getAtIndex(memory, p1)]);
                 ip += 2;
+                //TODO: enhancement here. End the loop here and pass out the outputs as done for opCode 99 below.
+                // Come up with a clever way of returning the list of outputs to maintain the tests
+                // use Day 7 Part 2 as a test to make sure this feature works correctly.
                 break;
             }
             case 5 : {
