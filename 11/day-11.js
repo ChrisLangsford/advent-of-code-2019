@@ -31,9 +31,10 @@ function part1(input) {
         facing: DIRECTIONS.UP,
         process: function () {
             let colourOutput = intCode(this.memoryString, this.ip, [hull.getLocationColour(this.positionString)], this.relativeBase, true);
-            let turnOutput = intCode(colourOutput.memory, colourOutput.instructionPointer, [hull.getLocationColour(this.positionString)], colourOutput.relativeBase, true);
-            this.done = turnOutput.complete;
+            this.done = colourOutput.complete;
             if (!this.done) {
+                let turnOutput = intCode(colourOutput.memory, colourOutput.instructionPointer, [hull.getLocationColour(this.positionString)], colourOutput.relativeBase, true);
+                this.done = turnOutput.complete;
                 this.memoryString = turnOutput.memory;
                 this.ip = turnOutput.instructionPointer;
                 this.relativeBase = turnOutput.relativeBase;
@@ -55,7 +56,9 @@ function part1(input) {
             x += DX[this.facing];
             y += DY[this.facing];
             this.positionString = `${x},${y}`;
-            hull.panels[this.positionString] = 0;
+            if (hull.panels[this.positionString] === undefined) {
+                hull.panels[this.positionString] = 0;
+            }
         }
     };
     while (!robot.done) {

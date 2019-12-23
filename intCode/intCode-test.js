@@ -21,8 +21,7 @@ describe('IntCode Tests', () => {
     });
     describe('Day 5 part 1', () => {
         it('should get an output of 9219874 provided input 1', () => {
-            let output = intCode(day5Input, 0, [1], 0).output.split(',');
-            assert.equal(output[output.length - 1], 9219874);
+            assert.equal(intCode(day5Input, 0, [1], 0).output.join(""), 9219874);
         });
     });
     describe('Day 5 part 2', () => {

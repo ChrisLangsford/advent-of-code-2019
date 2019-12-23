@@ -124,7 +124,7 @@ module.exports = intcode = function intCode(initialState, ip, input, relativeBas
         }
     }
 
-    return {output: output.join(','), memory: memory.map(x => x.toString()).join(','), instructionPointer: ip, relativeBase: relativeBase, complete: true};
+    return {output: output, memory: memory.map(x => x.toString()).join(','), complete: true};
 };
 
 function getAtIndex(memory, index) {
