@@ -16,8 +16,10 @@ function part1(input) {
     let done = false;
     let tiles = [];
     let output = intCode(input, 0, [], 0, false);
-
-    //TODO: loop over output building tiles from output
+    for (let i = 0; i < output.output.length; i++) {
+        let triplet = output.output.splice(0, 3);
+        tiles.push({x: triplet[0], y: triplet[1], type: triplet[2]});
+    }
 
     return tiles.filter(t => {
         return t.type === TILES.BLOCK
