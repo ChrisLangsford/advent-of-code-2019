@@ -83,12 +83,33 @@ function part2(input) {
     while (!robot.done) {
         robot.process();
     }
+    return printPanels(hull);
+}
 
-    return JSON.stringify(hull.panels);
+function printPanels(hull) {
+    let panels = Object.entries(hull.panels).map((x) => {
+        return [...x[0].split(',').map(y => parseInt(y)), x[1]]
+    });
+
+    let xmin = panels.map(x => x[0]).sort((a,b)=>{return a-b})[0];
+    let xmax = panels.map(x => x[0]).sort((a,b)=>{return a-b})[panels.length-1];
+    let ymin = panels.map(y => y[1]).sort((a,b)=>{return a-b})[0];
+    let ymax = panels.map(y => y[1]).sort((a,b)=>{return a-b})[panels.length-1];
+
+    let out = "\n";
+    for (let i = ymin; i < ymax+1; i++) {
+        for (let j = xmin; j < xmax+1; j++) {
+            out += hull.panels[`${j},${i}`] ===0? '.': '#';
+        }
+        out += '\n';
+    }
+
+    return out.split("").reverse().join("");
 }
 
 console.log(`Part 1: ${part1(input.string)}`);
-console.log(`Part 2: ${part2(input.string)}`);
+console.log(`Part 2: Note, Read using a mirror \n${part2(input.string)}`);
+
 
 module.exports = {
     part1: part1,
