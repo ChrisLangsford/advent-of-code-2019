@@ -12,17 +12,8 @@ const DY = {"RIGHT": 0, "LEFT": 0, "UP": 1, "DOWN": -1};
 console.log(`Part 1: ${part1(input.string)}`);
 console.log(`Part 2: ${part2(input.string)}`);
 
-function part1(input) {
-    let hull = {
-        panels: {"0,0": 0},
-        getLocationColour: function (positionString) {
-            let x = positionString.split(',')[0];
-            let y = positionString.split(',')[1];
-            return this.panels[`${x},${y}`]
-        }
-    };
-
-    const robot = {
+function Robot(input, hull) {
+    return {
         done: false,
         memoryString: input,
         ip: 0,
@@ -61,6 +52,19 @@ function part1(input) {
             }
         }
     };
+}
+
+function part1(input) {
+    let hull = {
+        panels: {"0,0": 0},
+        getLocationColour: function (positionString) {
+            let x = positionString.split(',')[0];
+            let y = positionString.split(',')[1];
+            return this.panels[`${x},${y}`]
+        }
+    };
+
+    const robot = Robot(input, hull);
     while (!robot.done) {
         robot.process();
     }
