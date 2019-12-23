@@ -9,9 +9,6 @@ const DXDY = {
 const DX = {"RIGHT": 1, "LEFT": -1, "UP": 0, "DOWN": 0};
 const DY = {"RIGHT": 0, "LEFT": 0, "UP": 1, "DOWN": -1};
 
-console.log(`Part 1: ${part1(input.string)}`);
-console.log(`Part 2: ${part2(input.string)}`);
-
 function Robot(input, hull) {
     return {
         done: false,
@@ -73,7 +70,25 @@ function part1(input) {
 }
 
 function part2(input) {
+    let hull = {
+        panels: {"0,0": 1},
+        getLocationColour: function (positionString) {
+            let x = positionString.split(',')[0];
+            let y = positionString.split(',')[1];
+            return this.panels[`${x},${y}`]
+        }
+    };
+
+    const robot = Robot(input, hull);
+    while (!robot.done) {
+        robot.process();
+    }
+
+    return JSON.stringify(hull.panels);
 }
+
+console.log(`Part 1: ${part1(input.string)}`);
+console.log(`Part 2: ${part2(input.string)}`);
 
 module.exports = {
     part1: part1,
