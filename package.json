@@ -25,7 +25,9 @@
     "day-11": "node 11/day-11.js",
     "day-11-test": "mocha 11/day-11-test.js",
     "day-12": "node 12/day-12.js",
-    "day-12-test": "mocha 12/day-12-test.js"
+    "day-12-test": "mocha 12/day-12-test.js",
+    "day-13": "node 13/day-13.js",
+    "day-13-test": "mocha 13/day-13-test.js"
   },
   "author": "",
   "license": "ISC",

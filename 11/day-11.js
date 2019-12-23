@@ -36,7 +36,6 @@ function Robot(input, hull) {
         },
         turn: function (turnInstruction) {
             this.facing = DXDY[`${this.facing}${turnInstruction}`];
-
         },
         move: function () {
             let x = parseInt(this.positionString.split(',')[0]);
