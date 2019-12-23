@@ -29,17 +29,18 @@ function part1(input) {
         relativeBase: 0,
         positionString: "0,0",
         facing: DIRECTIONS.UP,
-        panelsPainted: new Set(),
         process: function () {
             let colourOutput = intCode(this.memoryString, this.ip, [hull.getLocationColour(this.positionString)], this.relativeBase, true);
             let turnOutput = intCode(colourOutput.memory, colourOutput.instructionPointer, [hull.getLocationColour(this.positionString)], colourOutput.relativeBase, true);
             this.done = turnOutput.complete;
-            this.memoryString = turnOutput.memory;
-            this.ip = turnOutput.instructionPointer;
-            this.relativeBase = turnOutput.relativeBase;
-            this.paint(colourOutput.output);
-            this.turn(turnOutput.output);
-            this.move();
+            if (!this.done) {
+                this.memoryString = turnOutput.memory;
+                this.ip = turnOutput.instructionPointer;
+                this.relativeBase = turnOutput.relativeBase;
+                this.paint(colourOutput.output);
+                this.turn(turnOutput.output);
+                this.move();
+            }
         },
         paint: function (colour) {
             hull.panels[this.positionString] = parseInt(colour);
@@ -54,12 +55,11 @@ function part1(input) {
             x += DX[this.facing];
             y += DY[this.facing];
             this.positionString = `${x},${y}`;
+            hull.panels[this.positionString] = 0;
         }
     };
     while (!robot.done) {
         robot.process();
-        //TODO: heap running out of memory during second program run (second colour run)
-        // - good place to start is looking at the inputs provided for the second colour run
     }
 
     return Object.keys(hull.panels).length;
