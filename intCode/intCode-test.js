@@ -11,60 +11,68 @@ const day9Input = "1102,34463338,34463338,63,1007,63,34463338,63,1005,63,53,1102
 describe('IntCode Tests', () => {
     describe('Day 2 part 1', () => {
         it('should calculate 3716250 at position 0 upon completion', () => {
-            assert.equal(intCode(day2Input1, 0, 0).memory.split(",")[0], 3716250);
+            assert.equal(intCode(day2Input1, 0, 0).next().memory.split(",")[0], 3716250);
         });
     });
     describe('Day 2 part 2', () => {
         it('should get an output of 19690720 from input 2', () => {
-            assert.equal(intCode(day2Input2, 0, 0).memory.split(",")[0], 19690720);
+            assert.equal(intCode(day2Input2, 0, 0).next().memory.split(",")[0], 19690720);
         });
     });
     describe('Day 5 part 1', () => {
         it('should get an output of 9219874 provided input 1', () => {
-            assert.equal(intCode(day5Input, 0, [1], 0).output.join(""), 9219874);
+            let out = [];
+            let done = false;
+            let ic = intCode(day5Input, 0, [1], 0);
+            while (!done) {
+                let p = ic.next();
+                out.push(p.output);
+                done = p.complete;
+            }
+            assert.equal(parseInt(out[out.length-1].pop()), 9219874);
         });
     });
     describe('Day 5 part 2', () => {
         it('should get an output of 19690720 from input 2', () => {
-            assert.equal(intCode(day5Input, 0, [5], 0).output, 5893654);
+            assert.equal(intCode(day5Input, 0, [5], 0).next().output, 5893654);
         });
     });
     describe('Day 7 part 1', () => {
         it('should get an output of 398674 provided inputs 03124 for 5 chained operations of intCode', () => {
             const day7Input = "3,8,1001,8,10,8,105,1,0,0,21,38,63,76,93,118,199,280,361,442,99999,3,9,101,3,9,9,102,3,9,9,101,4,9,9,4,9,99,3,9,1002,9,2,9,101,5,9,9,1002,9,5,9,101,5,9,9,1002,9,4,9,4,9,99,3,9,101,2,9,9,102,3,9,9,4,9,99,3,9,101,2,9,9,102,5,9,9,1001,9,5,9,4,9,99,3,9,102,4,9,9,1001,9,3,9,1002,9,5,9,101,2,9,9,1002,9,2,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,2,9,9,4,9,99,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,99,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,2,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,99";
 
-            let a = intCode(day7Input, 0, [0, 0], 0);// 13
-            let b = intCode(day7Input, 0, [3, Number(a.output)], 0);// 80
-            let c = intCode(day7Input, 0, [1, Number(b.output)], 0);// 3320
-            let d = intCode(day7Input, 0, [2, Number(c.output)], 0);// 9966
-            let e = intCode(day7Input, 0, [4, Number(d.output)], 0);// 398674
+            let a = intCode(day7Input, 0, [0, 0], 0).next();// 13
+            let b = intCode(day7Input, 0, [3, Number(a.output)], 0).next();// 80
+            let c = intCode(day7Input, 0, [1, Number(b.output)], 0).next();// 3320
+            let d = intCode(day7Input, 0, [2, Number(c.output)], 0).next();// 9966
+            let e = intCode(day7Input, 0, [4, Number(d.output)], 0).next();// 398674
             assert.equal(e.output, 398674);
         });
         it('should get an output of 43210 provided inputs 43210 for 5 chained operations of intCode', () => {
             const day7Input2 = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0";
-            let a = intCode(day7Input2, 0, [4, 0], 0);
-            let b = intCode(day7Input2, 0, [3, Number(a.output)], 0);
-            let c = intCode(day7Input2, 0, [2, Number(b.output)], 0);
-            let d = intCode(day7Input2, 0, [1, Number(c.output)], 0);
-            let e = intCode(day7Input2, 0, [0, Number(d.output)], 0);
+            let a = intCode(day7Input2, 0, [4, 0], 0).next();
+            let b = intCode(day7Input2, 0, [3, Number(a.output)], 0).next();
+            let c = intCode(day7Input2, 0, [2, Number(b.output)], 0).next();
+            let d = intCode(day7Input2, 0, [1, Number(c.output)], 0).next();
+            let e = intCode(day7Input2, 0, [0, Number(d.output)], 0).next();
             assert.equal(e.output, 43210);
         });
         it('should get an output of 54321 provided inputs 01234 for 5 chained operations of intCode', () => {
             const day7Input3 = "3,23,3,24,1002,24,10,24,1002,23,-1,23,101,5,23,23,1,24,23,23,4,23,99,0,0";
-            let a = intCode(day7Input3, 0, [0, 0], 0);
-            let b = intCode(day7Input3, 0, [1, Number(a.output)], 0);
-            let c = intCode(day7Input3, 0, [2, Number(b.output)], 0);
-            let d = intCode(day7Input3, 0, [3, Number(c.output)], 0);
-            let e = intCode(day7Input3, 0, [4, Number(d.output)], 0);
+            let a = intCode(day7Input3, 0, [0, 0], 0).next();
+            let b = intCode(day7Input3, 0, [1, Number(a.output)], 0).next();
+            let c = intCode(day7Input3, 0, [2, Number(b.output)], 0).next();
+            let d = intCode(day7Input3, 0, [3, Number(c.output)], 0).next();
+            let e = intCode(day7Input3, 0, [4, Number(d.output)], 0).next();
             assert.equal(e.output, 54321);
         });
         it('should get an output of 65210 provided inputs 10432 for 5 chained operations of intCode', () => {
             const day7Input4 = "3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0";
-            let a = intCode(day7Input4, 0, [1, 0], 0);
-            let b = intCode(day7Input4, 0, [0, Number(a.output)], 0);
-            let c = intCode(day7Input4, 0, [4, Number(b.output)], 0);
-            let d = intCode(day7Input4, 0, [3, Number(c.output)], 0);
-            let e = intCode(day7Input4, 0, [2, Number(d.output)], 0);
+            let a = intCode(day7Input4, 0, [1, 0], 0).next();
+            let b = intCode(day7Input4, 0, [0, Number(a.output)], 0).next();
+            let c = intCode(day7Input4, 0, [4, Number(b.output)], 0).next();
+            let d = intCode(day7Input4, 0, [3, Number(c.output)], 0).next();
+            let e = intCode(day7Input4, 0, [2, Number(d.output)], 0).next();
             assert.equal(e.output, 65210);
         });
 
@@ -82,12 +90,12 @@ describe('IntCode Tests', () => {
     });
     describe('Day 9 part 1', () => {
         it('should get an output of 4234906522', () => {
-            assert.equal(intCode(day9Input, 0, [1], 0).output, 4234906522);
+            assert.equal(intCode(day9Input, 0, [1], 0).next().output, 4234906522);
         });
     });
     describe('Day 9 part 2', () => {
         it('should get an output of 60962', () => {
-            assert.equal(intCode(day9Input,0,[2],0).output, 60962);
+            assert.equal(intCode(day9Input, 0, [2], 0).next().output, 60962);
         });
     });
 });

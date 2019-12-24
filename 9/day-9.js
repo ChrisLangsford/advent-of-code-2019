@@ -5,12 +5,12 @@ console.log(`Part 1: ${part1(input.string)}`);
 console.log(`Part 2: ${part2(input.string)}`);
 
 function part1(input) {
-    return intCode(input, 0,[1], 0).output;
+    return intCode(input, 0,[1], 0).next().output;
 }
 
 
 function part2(input) {
-    return intCode(input, 0, [2], 0).output;
+    return intCode(input, 0, [2], 0).next().output;
 }
 
 module.exports = {
