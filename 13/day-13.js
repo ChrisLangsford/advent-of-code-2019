@@ -5,11 +5,19 @@ const TILES = {EMPTY: 0, WALL: 1, BLOCK: 2, H_PADDLE: 3, BALL: 4};
 
 
 function part1(input) {
-    let done = false;
     let tiles = [];
-    let output = intCode(input, 0, [], 0, false);
-    for (let i = 0; i < output.output.length; i++) {
-        let triplet = output.output.splice(0, 3);
+    let done = false;
+    let output = [];
+    let ic = intCode(input, 0, [], 0);
+
+    while (!done) {
+        let out = ic.next();
+        output.push(out.output);
+        done = out.complete;
+    }
+
+    for (let i = 0; i < output.length; i++) {
+        let triplet = output.splice(0, 3);
         tiles.push({x: triplet[0], y: triplet[1], type: triplet[2]});
     }
 

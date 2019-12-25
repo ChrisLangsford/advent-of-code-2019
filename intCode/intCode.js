@@ -5,9 +5,6 @@ module.exports = intCode = function(initialState, ip, input, relativeBase) {
         relativeBase: relativeBase,
         run: true,
         input: input,
-        setInput: function(value){
-            this.input = [...input, value];
-        },
         output: [],
         getAtIndex: function (index) {
             while (this.memory[index] === undefined) {
