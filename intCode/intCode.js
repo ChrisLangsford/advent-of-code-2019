@@ -5,6 +5,9 @@ module.exports = intCode = function(initialState, ip, input, relativeBase) {
         relativeBase: relativeBase,
         run: true,
         input: input,
+        setInput: function(value){
+            this.input = [...input, value];
+        },
         output: [],
         getAtIndex: function (index) {
             while (this.memory[index] === undefined) {
@@ -72,7 +75,7 @@ module.exports = intCode = function(initialState, ip, input, relativeBase) {
                         this.output.push(this.memory[this.getAtIndex(p1)]);
                         this.ip += 2;
                         return {
-                            output: this.output.join(','),
+                            output: this.output[this.output.length -1],
                             memory: this.memory.map(x => x.toString()).join(','),
                             complete: false
                         };

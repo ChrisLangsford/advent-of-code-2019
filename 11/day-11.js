@@ -12,20 +12,16 @@ const DY = {"RIGHT": 0, "LEFT": 0, "UP": 1, "DOWN": -1};
 function Robot(input, hull) {
     return {
         done: false,
-        memoryString: input,
-        ip: 0,
-        relativeBase: 0,
         positionString: "0,0",
         facing: DIRECTIONS.UP,
+        brain: intCode(input, 0, [hull.getLocationColour(this.positionString)], 0),
         process: function () {
-            let colourOutput = intCode(this.memoryString, this.ip, [hull.getLocationColour(this.positionString)], this.relativeBase, true);
+            this.brain.input = [hull.getLocationColour(this.positionString)];
+            let colourOutput = this.brain.next();
             this.done = colourOutput.complete;
             if (!this.done) {
-                let turnOutput = intCode(colourOutput.memory, colourOutput.instructionPointer, [hull.getLocationColour(this.positionString)], colourOutput.relativeBase, true);
+                let turnOutput = this.brain.next();
                 this.done = turnOutput.complete;
-                this.memoryString = turnOutput.memory;
-                this.ip = turnOutput.instructionPointer;
-                this.relativeBase = turnOutput.relativeBase;
                 this.paint(colourOutput.output);
                 this.turn(turnOutput.output);
                 this.move();
@@ -54,8 +50,12 @@ function part1(input) {
     let hull = {
         panels: {"0,0": 0},
         getLocationColour: function (positionString) {
-            let x = positionString.split(',')[0];
-            let y = positionString.split(',')[1];
+            let x = '';
+            let y = '';
+            if (positionString) {
+                x = positionString.split(',')[0];
+                y = positionString.split(',')[1];
+            }
             return this.panels[`${x},${y}`]
         }
     };
@@ -72,8 +72,12 @@ function part2(input) {
     let hull = {
         panels: {"0,0": 1},
         getLocationColour: function (positionString) {
-            let x = positionString.split(',')[0];
-            let y = positionString.split(',')[1];
+            let x = '';
+            let y = '';
+            if (positionString) {
+                x = positionString.split(',')[0];
+                y = positionString.split(',')[1];
+            }
             return this.panels[`${x},${y}`]
         }
     };
@@ -90,15 +94,23 @@ function printPanels(hull) {
         return [...x[0].split(',').map(y => parseInt(y)), x[1]]
     });
 
-    let xmin = panels.map(x => x[0]).sort((a,b)=>{return a-b})[0];
-    let xmax = panels.map(x => x[0]).sort((a,b)=>{return a-b})[panels.length-1];
-    let ymin = panels.map(y => y[1]).sort((a,b)=>{return a-b})[0];
-    let ymax = panels.map(y => y[1]).sort((a,b)=>{return a-b})[panels.length-1];
+    let xmin = panels.map(x => x[0]).sort((a, b) => {
+        return a - b
+    })[0];
+    let xmax = panels.map(x => x[0]).sort((a, b) => {
+        return a - b
+    })[panels.length - 1];
+    let ymin = panels.map(y => y[1]).sort((a, b) => {
+        return a - b
+    })[0];
+    let ymax = panels.map(y => y[1]).sort((a, b) => {
+        return a - b
+    })[panels.length - 1];
 
     let out = "\n";
-    for (let i = ymin; i < ymax+1; i++) {
-        for (let j = xmin; j < xmax+1; j++) {
-            out += hull.panels[`${j},${i}`] ===0? '.': '#';
+    for (let i = ymin; i < ymax + 1; i++) {
+        for (let j = xmin; j < xmax + 1; j++) {
+            out += hull.panels[`${j},${i}`] === 0 ? '.' : '#';
         }
         out += '\n';
     }
