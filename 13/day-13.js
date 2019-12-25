@@ -27,12 +27,37 @@ function part1(input) {
 }
 
 function part2(input) {
-// 1. run 3 iterations of intcode (x,y,z)
-// 2. if (-1,0,x) -> add x to score
-// 3. get paddle tile position and ball position
-// 4. calculate difference and set input for next 3 iteration
-// TODO: Refactor intcode to export as an object with a next method which un-pauses (sets run to true) the computer
-//       that way the computer itself will handle keeping its own memory between executions
+    let score = 0;
+    let done = false;
+    let ic = intCode(input, 0, [0], 0);
+    let paddleX;
+    let ballX;
+
+    while (!done) {
+        let first = ic.next();
+        done = first.complete;
+        let second = ic.next();
+        done = second.complete;
+        let third = ic.next();
+        done = third.complete;
+
+        if (first.output === -1 && second.output === 0) {
+            score = third.output;
+            console.log(`Score: ${third.output}`);
+        }
+
+        if (third.output === TILES.H_PADDLE) {
+            paddleX = first.output;
+        }
+        if (third.output === TILES.BALL) {
+            ballX = first.output;
+        }
+        if (ballX && paddleX) {
+            ic.input = [Math.sign(ballX - paddleX)];
+        }
+    }
+    console.log(`Score: ${score}`);
+    return score;
 }
 
 

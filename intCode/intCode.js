@@ -64,6 +64,7 @@ module.exports = intCode = function(initialState, ip, input, relativeBase) {
                     }
                     case 3: {
                         this.memory[this.getAtIndex(p1)] = this.input[0];
+                        // console.log(`IntCode Input: ${this.input[0]}`);
                         this.input[0] = this.input.pop();
                         this.ip += 2;
                         break;
