@@ -1,17 +1,21 @@
-const input = require("./input-14");
-
+const input = require('./input-14');
 
 function part1(input) {
-    let costs = {};
-    let lines = input.split("\n");
-    lines.forEach(line => {
-        let inn = line.split("=>")[0].trim();
-        let out = line.split("=>")[1].trim();
-        costs[out] = inn;
-    });
-    //this way we can break input into its constituent parts
-    //input.split("\n")[0].split("=>")[0].split(",")[0].trim().split(" ")
-    //note - reactions are not only in 1:1 terms
+    const reactions = parseInput(input);
+}
+
+function parseInput(input){
+    const quantityKey = Symbol();
+    return input.trim().split('\n').reduce((map, line) => {
+        const [ingredientList, result] = line.split(' => ');
+        const [quantity, chemical] = result.split(' ');
+        map[chemical] = ingredientList.split(', ').reduce((ingredientMap, combo) => {
+            const [qty, chem] = combo.split(' ');
+            ingredientMap[chem] = +qty;
+            return ingredientMap;
+        }, {[quantityKey]: +quantity});
+        return map;
+    }, {});
 }
 
 function part2(input) {
